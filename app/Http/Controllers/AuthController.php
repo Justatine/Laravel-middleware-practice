@@ -15,7 +15,16 @@ class AuthController extends Controller
         ])->validate();
 
         if (auth()->attempt(request()->only(['email', 'password']))) {
-            return redirect('/dashboard');
+            // return redirect('/dashboard');
+            $user = auth()->user();
+            switch ($user->role) {
+                case 'Admin':
+                    return redirect('/admin/index');
+                case 'Student':
+                    return redirect('/student/index');
+                default:
+                    return redirect('/');
+            }
         }
 
         return redirect()->back()->withErrors(['email' => 'Invalid Credentials']);

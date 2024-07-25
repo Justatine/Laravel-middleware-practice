@@ -13,6 +13,11 @@ class StudentController extends Controller
             'user' => auth()->user()
         ]);
     }
+    public function dashboard(){
+        return view('student.index', [
+            'user' => auth()->user()
+        ]);
+    }
     public function getStudents(){
         $user = Auth::user(); 
         $students = Students::orderByDesc('created_at')->get();
